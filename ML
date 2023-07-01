@@ -1,0 +1,68 @@
+library(readxl)
+library(dplyr)
+hpi<- read_excel("House Price India.xlsx")
+#train test split
+#1.split data
+#2.trian
+#3. score
+#4.evaluate
+
+glimpse(hpi)
+names(hpi)
+
+#1.split data 80%:20%
+set.seed(88)
+n<- nrow(hpi)
+id<- sample(1:n, size = 0.8*n)
+train_data <- hpi [id, ]
+test_data <- hpi[-id, ]
+
+#nomalize data
+train_data$train_price_n<- log(train_data$Price)
+test_data$test_price_n<- log(test_data$Price)
+
+# train model
+ctrl<- trainControl(
+  method = "cv", 
+  number = 5, 
+  verboseIter= TRUE
+)
+
+lm_model<- train(train_price_n ~  condition_of_the_house
+           + grade_of_the_house
+           + Area_of_the_house_excluding_basement
+           + Built_Year
+           + living_area
+           + number_of_bedrooms
+           + lot_area
+           + number_of_floors
+           + living_area_renov
+            , data = train_data, method= "lm",
+           trControl= ctrl)
+
+#3. score model
+p<- predict(lm_model, newdata = test_data)
+
+#4.evaluate model
+mae_metric <- function(actual, prediction){
+  #mean absolute error
+  abs_error <- abs(actual - prediction)
+  mean(abs_error)
+}
+
+mse_metric <- function(actual, prediction){
+  #mean sqared error
+  sq_error<- (actual- prediction)**2
+  mean(sq_error)
+}
+
+rmse_metric<- function(actual, prediction){
+  #root mean sqared error
+  sq_error<- (actual- prediction)**2
+  sqrt(mean(sq_error)) ## back to normal unit
+}
+
+lm_model
+rmse_metric(test_data$test_price_n, p)
+mae_metric(test_data$test_price_n, p)
+mse_metric(test_data$test_price_n, p)
