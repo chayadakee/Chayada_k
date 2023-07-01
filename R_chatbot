@@ -1,0 +1,32 @@
+chitchat_booboo <- function() {
+  print ("Annyongggg !!")
+  name <- readline("Hi Hi What's your name:")
+  print(paste("Hello!", name))
+  
+  while (TRUE) {
+    like <- readline("Do you love Mint Choc! : yes[1] or no[2] ")
+    print("Type 'Bye' when you want to exit")
+    
+    if(like == "Bye"){
+      print("Bye Bye Boo Boo, Have a nice day :) ")
+      break
+    } else if(like == "2") {
+      print("you are missed!")
+    } else if (like == "1") {
+      print("Wow! same with me, you should be my soulmate")
+    }
+    pieces <- readline("How many pieces of mint choc that you eat today?")
+    if(pieces >= 3){
+      print("Awesome, you are Mint choc lover <3 !!")
+    } else if (pieces < 3){
+      print("take more! that is not enough")
+    }
+    
+    snowman <- readline("Then, Do you want to build a snowman? yes or no")
+    if(snowman == "yes"){
+      print("Come on let's go and play")
+    } else if (snowman =="no"){
+      print("Go away Anna! okay bye")
+    }
+
+  }}
