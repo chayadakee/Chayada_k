@@ -1,0 +1,35 @@
+library(ggplot2)
+library(tidyverse)
+library(patchwork)
+
+##Chart 1 - Carat Dept and Price
+head(diamonds)
+ggplot(diamonds %>% sample_n(5000), aes(carat,depth, col=price))+
+  geom_point(size=5, alpha= 0.7)+
+  theme_minimal() +
+  scale_color_gradient(low= "turquoise3", high= "springgreen3")
+
+##Chart 2 - Cut carat  and Price
+ggplot(diamonds %>% sample_n(5000),
+       mapping= aes(carat, price, col= cut)) +
+  geom_point(size=3 , alpha = 1) +
+  theme_minimal() +
+  scale_color_brewer (type= "qual", palette = 4)
+
+##Chart3 Color Dept Price
+ggplot(diamonds %>% sample_n(5000),
+       mapping= aes(depth, price, col= color)) +
+  geom_point(size=3 , alpha = 1) +
+  theme_minimal() +
+  scale_color_brewer (type= "div", palette = 6)
+
+#Chart4 Bar Chart
+ggplot(diamonds, mapping = aes(cut, fill = color)) + 
+  geom_bar(position = "dodge")
+ 
+#Chart5 Facet
+ggplot (diamonds %>% sample_n(5000), aes(carat, price))+
+  geom_point(size =0.5, col= "royalblue4") +
+  geom_smooth(method = "lm", col= "salmon")+
+  facet_wrap( ~ color, ncol =4) +
+  theme_minimal()
